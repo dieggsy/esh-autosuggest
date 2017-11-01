@@ -1,9 +1,9 @@
-;;; company-eshell-autosuggest.el --- History autosuggestions for eshell -*- lexical-binding: t; -*-
+;;; eshell-autosuggest.el --- History autosuggestions for eshell -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2017 Diego A. Mundo
 ;; Author: Diego A. Mundo <diegoamundo@gmail.com>
-;; URL: http://github.com/dieggsy/company-eshell-autosuggest
-;; Git-Repository: git://github.com/dieggsy/company-eshell-autouggest.git
+;; URL: http://github.com/dieggsy/eshell-autosuggest
+;; Git-Repository: git://github.com/dieggsy/eshell-autosuggest.git
 ;; Created: 2017-10-28
 ;; Version: 1.0.0
 ;; Keywords: completion company matching convenience abbrev
@@ -35,7 +35,7 @@
 (require 'company)
 (require 'cl-lib)
 
-(defun company-eshell-autosuggest-candidates (prefix)
+(defun eshell-autosuggest-candidates (prefix)
   "Select the first eshell history candidate with prefix PREFIX."
   (let* ((history
           (delete-dups
@@ -49,7 +49,7 @@
     (when most-similar
       `(,most-similar))))
 
-(defun company-eshell-autosuggest--prefix ()
+(defun eshell-autosuggest--prefix ()
   "Get current eshell input."
   (let ((prefix
          (string-trim-left
@@ -62,15 +62,15 @@
       'stop)))
 
 ;;;###autoload
-(defun company-eshell-autosuggest (command &optional arg &rest ignored)
+(defun eshell-autosuggest (command &optional arg &rest ignored)
   "`company-mode' backend to provide eshell history suggestion."
   (interactive (list 'interactive))
   (cl-case command
     (interactive (company-begin-backend 'company-eshell))
     (prefix (and (eq major-mode 'eshell-mode)
-                 (company-eshell-autosuggest--prefix)))
-    (candidates (company-eshell-autosuggest-candidates arg))))
+                 (eshell-autosuggest--prefix)))
+    (candidates (eshell-autosuggest-candidates arg))))
 
-(provide 'company-eshell-autosuggest)
+(provide 'eshell-autosuggest)
 
-;;; company-eshell-autosuggest.el ends here
+;;; eshell-autosuggest.el ends here
