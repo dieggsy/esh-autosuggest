@@ -1,0 +1,31 @@
+* company-eshell-autosuggest
+Fish-like history autosuggestions in eshell
+
+See [[http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/][my blog post]] for an example.
+
+** Usage
+Make sure company-mode is enabled in eshell. You can do this with
+~(global-company-mode t)~ or by adding a hook:
+#+begin_src emacs-lisp
+(add-hook 'eshell-mode-hook 'company-mode)
+#+end_src
+
+Then set the company backend and frontend:
+#+begin_src emacs-lisp
+(defun setup-eshell-autosuggest ()
+  (with-eval-after-load 'company
+    (setq-local company-backends '(company-eshell-autosuggest))
+    (setq-local company-frontends '(company-preview-frontend))))
+
+(add-hook 'eshell-mode-hook 'setup-eshell-autosuggest)
+#+end_src
+
+** Installation
+This package is not on melpa yet. Consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or
+[[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
+
+Otherwise, download the files to somewhere on your load path, and enable
+hacker-typer:
+#+begin_src emacs-lisp
+(require 'company-eshell-autosuggest)
+#+end_src
