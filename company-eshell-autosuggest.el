@@ -1,13 +1,13 @@
-;;; eshell-autosuggest.el --- History autosuggestions for eshell -*- lexical-binding: t; -*-
+;;; company-eshell-autosuggest.el --- History autosuggestions for eshell -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2017 Diego A. Mundo
 ;; Author: Diego A. Mundo <diegoamundo@gmail.com>
-;; URL: http://github.com/dieggsy/eshell-autosuggest
-;; Git-Repository: git://github.com/dieggsy/eshell-autosuggest.git
+;; URL: http://github.com/dieggsy/company-eshell-autosuggest
+;; Git-Repository: git://github.com/dieggsy/company-eshell-autosuggest.git
 ;; Created: 2017-10-28
 ;; Version: 1.0.0
 ;; Keywords: completion company matching convenience abbrev
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "24.4") (company "0.9.4"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -35,7 +35,7 @@
 (require 'company)
 (require 'cl-lib)
 
-(defun eshell-autosuggest-candidates (prefix)
+(defun company-eshell-autosuggest-candidates (prefix)
   "Select the first eshell history candidate with prefix PREFIX."
   (let* ((history
           (delete-dups
@@ -49,7 +49,7 @@
     (when most-similar
       `(,most-similar))))
 
-(defun eshell-autosuggest--prefix ()
+(defun company-eshell-autosuggest--prefix ()
   "Get current eshell input."
   (let ((prefix
          (string-trim-left
@@ -62,15 +62,15 @@
       'stop)))
 
 ;;;###autoload
-(defun eshell-autosuggest (command &optional arg &rest ignored)
+(defun company-eshell-autosuggest (command &optional arg &rest ignored)
   "`company-mode' backend to provide eshell history suggestion."
   (interactive (list 'interactive))
   (cl-case command
     (interactive (company-begin-backend 'company-eshell))
     (prefix (and (eq major-mode 'eshell-mode)
-                 (eshell-autosuggest--prefix)))
-    (candidates (eshell-autosuggest-candidates arg))))
+                 (company-eshell-autosuggest--prefix)))
+    (candidates (company-eshell-autosuggest-candidates arg))))
 
-(provide 'eshell-autosuggest)
+(provide 'company-eshell-autosuggest)
 
-;;; eshell-autosuggest.el ends here
+;;; company-eshell-autosuggest.el ends here
