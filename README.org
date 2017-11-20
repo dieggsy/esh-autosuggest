@@ -1,4 +1,8 @@
 * company-eshell-autosuggest
+[[http://melpa.milkbox.net/#/company-eshell-autosuggest][file:http://melpa.milkbox.net/packages/company-eshell-autosuggest-badge.svg]]
+[[https://stable.melpa.org/#/company-eshell-autosuggest][file:https://stable.melpa.org/packages/company-eshell-autosuggest-badge.svg]]
+[[https://www.gnu.org/licenses/gpl-3.0.txt][file:https://img.shields.io/badge/license-GPL_3-green.svg]]
+
 Fish-like history autosuggestions in eshell
 
 See [[http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/][my blog post]] for an example.
@@ -21,8 +25,15 @@ Then set the company backend and frontend:
 #+end_src
 
 ** Installation
-This package is not on melpa yet. Consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or
-[[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
+This package is on melpa. If you have melpa in your package repositories, you
+can use ~M-x RET package-install RET company-eshell-autosuggest~ or install
+with [[https://github.com/jwiegley/use-package][use-package]]:
+#+begin_src emacs-lisp
+(use-package company-eshell-autosuggest
+  :ensure t)
+#+end_src
+
+Alternatively, consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or [[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
 
 Otherwise, download the files to somewhere on your load path, and enable
 hacker-typer:
