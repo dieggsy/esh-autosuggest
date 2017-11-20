@@ -5,7 +5,7 @@
 ;; URL: http://github.com/dieggsy/company-eshell-autosuggest
 ;; Git-Repository: git://github.com/dieggsy/company-eshell-autosuggest.git
 ;; Created: 2017-10-28
-;; Version: 1.0.0
+;; Version: 1.0.1
 ;; Keywords: completion company matching convenience abbrev
 ;; Package-Requires: ((emacs "24.4") (company "0.9.4"))
 
@@ -51,12 +51,17 @@
 
 (defun company-eshell-autosuggest--prefix ()
   "Get current eshell input."
-  (let ((prefix
-         (string-trim-left
-          (buffer-substring-no-properties
-           (save-excursion
-             (eshell-bol))
-           (save-excursion (end-of-line) (point))))))
+  (let* ((input-start (progn
+                        (save-excursion
+                          (beginning-of-line)
+                          (while (not (looking-at-p eshell-prompt-regexp))
+                            (forward-line -1))
+                          (eshell-bol))))
+         (prefix
+          (string-trim-left
+           (buffer-substring-no-properties
+            input-start
+            (line-end-position)))))
     (if (not (string-empty-p prefix))
         prefix
       'stop)))
