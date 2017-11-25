@@ -35,8 +35,8 @@ with [[https://github.com/jwiegley/use-package][use-package]]:
 
 Alternatively, consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or [[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
 
-Otherwise, download the files to somewhere on your load path, and enable
-hacker-typer:
+Otherwise, download the files to somewhere on your load path, and require
+company-eshell-autosuggest:
 #+begin_src emacs-lisp
 (require 'company-eshell-autosuggest)
 #+end_src
