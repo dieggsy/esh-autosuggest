@@ -71,7 +71,7 @@
   "`company-mode' backend to provide eshell history suggestion."
   (interactive (list 'interactive))
   (cl-case command
-    (interactive (company-begin-backend 'company-eshell))
+    (interactive (company-begin-backend 'company-eshell-autosuggest))
     (prefix (and (eq major-mode 'eshell-mode)
                  (company-eshell-autosuggest--prefix)))
     (candidates (company-eshell-autosuggest-candidates arg))))
