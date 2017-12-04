@@ -5,7 +5,7 @@
 ;; URL: http://github.com/dieggsy/company-eshell-autosuggest
 ;; Git-Repository: git://github.com/dieggsy/company-eshell-autosuggest.git
 ;; Created: 2017-10-28
-;; Version: 1.0.1
+;; Version: 1.1.0
 ;; Keywords: completion company matching convenience abbrev
 ;; Package-Requires: ((emacs "24.4") (company "0.9.4"))
 
@@ -34,6 +34,22 @@
 
 (require 'company)
 (require 'cl-lib)
+
+(defgroup company-eshell-autosuggest nil
+  "Fish-like autosuggestions for eshell."
+  :group 'company)
+
+(defcustom company-eshell-autosuggest-delay 0
+  "Delay for history autosuggestion."
+  :group 'company-eshell-autosuggest
+  :type 'number)
+
+(defcustom company-eshell-autosuggest-selection-keys '("<right>")
+  "List of keys (vector or string) to use to select the history suggestion.
+
+Using the right key is most consistent with fish shell."
+  :group 'company-eshell-autosuggest
+  :type 'list)
 
 (defun company-eshell-autosuggest-candidates (prefix)
   "Select the first eshell history candidate with prefix PREFIX."
@@ -75,6 +91,40 @@
     (prefix (and (eq major-mode 'eshell-mode)
                  (company-eshell-autosuggest--prefix)))
     (candidates (company-eshell-autosuggest-candidates arg))))
+
+(define-minor-mode company-eshell-autosuggest-mode
+  "Enable fish-like autosuggestions in eshell.
+
+You can use <right> to select the suggestion. This is
+customizable with `company-eshell-autosuggest-selection-keys'.
+
+The delay defaults to 0 seconds to emulate fish shell's
+instantaneous suggestions, but is customizable with
+`company-eshell-autosuggest-delay'.
+
+Note: This assumes you want to use something other than company
+for shell completion, e.g. `eshell-pcomplete',
+`completion-at-point', or helm-esh-pcomplete, since
+`company-active-map', `company-backends', and `company-frontends'
+will be locally overriden and company will be used solely for
+history autosuggestions."
+  :init-value nil
+  :group 'company-eshell-autosuggest
+  (if company-eshell-autosuggest-mode
+      (progn
+        (company-mode 1)
+        (setq-local company-active-map (make-sparse-keymap))
+        (dolist (key company-eshell-autosuggest-selection-keys)
+          (setq key (if (vectorp key) key (kbd key)))
+          (define-key company-active-map key 'company-complete-selection))
+        (setq-local company-idle-delay company-eshell-autosuggest-delay)
+        (setq-local company-backends '(company-eshell-autosuggest))
+        (setq-local company-frontends '(company-preview-frontend)))
+    (company-mode -1)
+    (kill-local-variable 'company-active-map)
+    (kill-local-variable 'company-idle-delay)
+    (kill-local-variable 'company-backends)
+    (kill-local-variable 'company-frontends)))
 
 (provide 'company-eshell-autosuggest)
 
