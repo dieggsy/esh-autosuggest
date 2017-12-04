@@ -7,6 +7,23 @@ Fish-like history autosuggestions in eshell
 
 See [[http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/][my blog post]] for an example.
 
+** Installation
+This package is on melpa. If you have melpa in your package repositories, you
+can use ~M-x RET package-install RET company-eshell-autosuggest~ or install
+with [[https://github.com/jwiegley/use-package][use-package]]:
+#+begin_src emacs-lisp
+(use-package company-eshell-autosuggest
+  :ensure t)
+#+end_src
+
+Alternatively, consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or [[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
+
+Otherwise, download the files to somewhere on your load path, and require
+company-eshell-autosuggest:
+#+begin_src emacs-lisp
+(require 'company-eshell-autosuggest)
+#+end_src
+
 ** Usage
 *** Fish-like autosuggestions
 This method assumes you use something other that company for eshell completion
@@ -49,21 +66,4 @@ Then set the company backend and frontend:
     (setq-local company-frontends '(company-preview-frontend))))
 
 (add-hook 'eshell-mode-hook 'setup-company-eshell-autosuggest)
-#+end_src
-
-** Installation
-This package is on melpa. If you have melpa in your package repositories, you
-can use ~M-x RET package-install RET company-eshell-autosuggest~ or install
-with [[https://github.com/jwiegley/use-package][use-package]]:
-#+begin_src emacs-lisp
-(use-package company-eshell-autosuggest
-  :ensure t)
-#+end_src
-
-Alternatively, consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or [[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
-
-Otherwise, download the files to somewhere on your load path, and require
-company-eshell-autosuggest:
-#+begin_src emacs-lisp
-(require 'company-eshell-autosuggest)
 #+end_src
