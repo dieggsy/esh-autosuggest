@@ -8,6 +8,33 @@ Fish-like history autosuggestions in eshell
 See [[http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/][my blog post]] for an example.
 
 ** Usage
+*** Fish-like autosuggestions
+This method assumes you use something other that company for eshell completion
+(e.g. ~eshell-pcomplete~, ~completion-at-point~, ~helm-esh-pcomplete~). In this
+case, ~company-mode~ is used solely as a mechanism for history autosuggestions.
+To use some ~company-mode~ backend as your primary completion system and fall
+back to ~company-eshell-autosuggest~, see the the section [[#fallback-from-company-completion][Fallback from company
+completion]].
+
+You can enable the autosuggestions with:
+#+begin_src emacs-lisp
+(add-hook 'eshell-mode-hook #'company-eshell-autosuggest-mode)
+#+end_src
+
+**** Selection key
+~<right>~ is used to select the suggestion by default. You can change this or
+add additional keys by modifying the variable
+~company-eshell-autosuggest-selection-keys~.
+
+**** Delay
+Delay defaults to 0 seconds. This is most like fish shell's instant history
+autosuggestions, but can be customized through the variable
+~company-eshell-autosuggest-delay~.
+
+*** Fallback from company completion
+Stay tuned, WIP.
+
+*** Obsolete/deprecated
 Make sure company-mode is enabled in eshell. You can do this with
 ~(global-company-mode t)~ or by adding a hook:
 #+begin_src emacs-lisp
