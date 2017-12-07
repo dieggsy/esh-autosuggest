@@ -5,7 +5,7 @@
 ;; URL: http://github.com/dieggsy/company-eshell-autosuggest
 ;; Git-Repository: git://github.com/dieggsy/company-eshell-autosuggest.git
 ;; Created: 2017-10-28
-;; Version: 1.1.0
+;; Version: 1.2.0
 ;; Keywords: completion company matching convenience abbrev
 ;; Package-Requires: ((emacs "24.4") (company "0.9.4"))
 
@@ -44,12 +44,21 @@
   :group 'company-eshell-autosuggest
   :type 'number)
 
-(defcustom company-eshell-autosuggest-selection-keys '("<right>")
-  "List of keys (vector or string) to use to select the history suggestion.
+(defcustom company-eshell-autosuggest-use-company-map nil
+  "Instead of overriding `company-active-map', use as-is.
 
-Using the right key is most consistent with fish shell."
+This is disabled by default, as bindings in `company-active-map'
+to RET and TAB may interfere with command input and completion
+respectively."
   :group 'company-eshell-autosuggest
-  :type 'list)
+  :type 'boolean)
+
+(defvar company-eshell-autosuggest-active-map
+  (let ((keymap (make-sparse-keymap)))
+    (define-key keymap (kbd "<right>") 'company-complete-selection)
+    keymap)
+  "Keymap that is enabled during an active history
+  autosuggestion.")
 
 (defun company-eshell-autosuggest-candidates (prefix)
   "Select the first eshell history candidate with prefix PREFIX."
@@ -113,10 +122,8 @@ history autosuggestions."
   (if company-eshell-autosuggest-mode
       (progn
         (company-mode 1)
-        (setq-local company-active-map (make-sparse-keymap))
-        (dolist (key company-eshell-autosuggest-selection-keys)
-          (setq key (if (vectorp key) key (kbd key)))
-          (define-key company-active-map key 'company-complete-selection))
+        (unless company-eshell-autosuggest-use-company-map
+          (setq-local company-active-map company-eshell-autosuggest-active-map))
         (setq-local company-idle-delay company-eshell-autosuggest-delay)
         (setq-local company-backends '(company-eshell-autosuggest))
         (setq-local company-frontends '(company-preview-frontend)))
