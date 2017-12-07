@@ -70,13 +70,12 @@ company-backends need to share a prefix to work together smoothly. See
 ** Rationale and tips
 I made this package to help ease a transition from zsh to eshell as my main
 shell. The reason the main mechanism is a minor-mode that overrides
-company-mode is that I didn't find company-mode that useful for completion.
+company-mode is that I didn't find company-mode that useful for eshell
+completion.
 
-While the default popup-buffer frontend to pcomplete can be a bit annoying I've
-found there are alternatives that make pcomplete behave more like normal shell
-completion, and I find more powerful than just using company for eshell
-completion. Try one or more of the following for tab completion and see how you
-like it:
+While the default popup-buffer frontend to pcomplete can be a bit annoying,
+I've found there are alternatives that make pcomplete behave more like normal
+shell completion. Try one or more of the following for tab completion:
 
 - [[https://github.com/Ambrevar/emacs-fish-completion][Ambrevar/emacs-fish-completion]]
 - If you use helm
