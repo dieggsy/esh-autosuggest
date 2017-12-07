@@ -7,6 +7,23 @@ Fish-like history autosuggestions in eshell
 
 See [[http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/][my blog post]] for an example.
 
+** Installation
+This package is on melpa. If you have melpa in your package repositories, you
+can use ~M-x RET package-install RET company-eshell-autosuggest~ or install
+with [[https://github.com/jwiegley/use-package][use-package]]:
+#+begin_src emacs-lisp
+(use-package company-eshell-autosuggest
+  :ensure t)
+#+end_src
+
+Alternatively, consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or [[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
+
+Otherwise, download the files to somewhere on your load path, and require
+company-eshell-autosuggest:
+#+begin_src emacs-lisp
+(require 'company-eshell-autosuggest)
+#+end_src
+
 ** Usage
 This package assumes you use something other than company for eshell completion
 (e.g. ~eshell-pcomplete~, ~completion-at-point~, ~helm-esh-pcomplete~).
@@ -38,30 +55,50 @@ like e.g. ~company-capf~ like so:
 
 #+begin_src emacs-lisp
 ;; don't add company-eshell-autosuggest-mode to eshell-mode-hook
-(add-hook 'eshell-mode-hook (lambda ()
-                              (setq-local company-backends
-                                          '((company-capf company-eshell-autosuggest)))))
+(defun setup-eshell-grouped-backends ()
+  (setq-local company-backends
+              '((company-capf company-eshell-autosuggest))))
+
+(add-hook 'eshell-mode-hook #'setup-eshell-grouped-backends)
 #+end_src
 
 This isn't recommended since the history suggestions will be neither fish-lke,
 nor will they work after typing the first word on the command line, since
 company-backends need to share a prefix to work together smoothly. See
-https://github.com/company-mode/company-mode/issues/744 for more information.
+[[https://github.com/company-mode/company-mode/issues/744][company-mode/company-mode#744]] for more information.
 
-** Installation
-This package is on melpa. If you have melpa in your package repositories, you
-can use ~M-x RET package-install RET company-eshell-autosuggest~ or install
-with [[https://github.com/jwiegley/use-package][use-package]]:
-#+begin_src emacs-lisp
-(use-package company-eshell-autosuggest
-  :ensure t)
-#+end_src
+** Rationale and tips
+I made this package to help ease a transition from zsh to eshell as my main
+shell. The reason the main mechanism is a minor-mode that overrides
+company-mode is that I didn't find company-mode that useful for completion.
 
-Alternatively, consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or [[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
+While the default popup-buffer frontend to pcomplete can be a bit annoying I've
+found there are alternatives that make pcomplete behave more like normal shell
+completion, and I find more powerful than just using company for eshell
+completion. Try one or more of the following for tab completion and see how you
+like it:
 
-Otherwise, download the files to somewhere on your load path, and require
-company-eshell-autosuggest:
-#+begin_src emacs-lisp
-(require 'company-eshell-autosuggest)
-#+end_src
+- [[https://github.com/Ambrevar/emacs-fish-completion][Ambrevar/emacs-fish-completion]]
+- If you use helm
+  #+begin_src emacs-lisp
+  (defun setup-eshell-helm-completion ()
+    (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete))
+
+  (add-hook 'eshell-mode-hook #'setup-eshell-helm-completion)
+  #+end_src
+- If you use ivy
+  #+begin_src emacs-lisp
+  (setq ivy-do-completion-in-region t) ; this is the default
+
+  (defun setup-eshell-ivy-completion ()
+    (define-key [remap eshell-pcomplete] 'completion-at-point)
+    ;; only if you want to use the minibuffer for completions instead of the
+    ;; in-buffer interface
+    (setq-local ivy-display-functions-alist
+                (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
+                      ivy-display-functions-alist)))
+
+  (add-hook 'eshell-mode-hook #'setup-eshell-ivy-completion)
+  #+end_src
+
 
