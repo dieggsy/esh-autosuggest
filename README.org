@@ -36,14 +36,14 @@ You can enable the autosuggestions with:
 
 *** Keys
 ~<right>~ is used to select the suggestion by default. You can change this
-binding keys in ~company-eshell-autosuggest-active-map~.
+by binding keys in ~company-eshell-autosuggest-active-map~.
 
 If instead you don't want ~company-active-map~ to be overridden, you may set
-~company-eshell-autosuggest-use-company-map~ to ~t~. Use at your own risk, this
-may cause unexpected behavior when pressing ~RET~ or ~TAB~, depending on what
-you want those to do. To emulate fish-shell most closely, it is recommended you
-leave this ~nil~, as that will explicitly run your input (regardless of
-suggestion) on ~RET~, and bring up your preferred completion system on ~TAB~.
+~company-eshell-autosuggest-use-company-map~ to ~t~. This may cause unexpected
+behavior when pressing ~RET~ or ~TAB~, depending on what you want those to do.
+To emulate fish-shell most closely, it is recommended you leave this ~nil~, as
+that will explicitly run your input (regardless of suggestion) on ~RET~, and
+bring up your preferred completion system on ~TAB~.
 
 *** Delay
 ~company-eshell-autosuggest-delay~ defaults to 0 seconds. This is most like
@@ -62,7 +62,7 @@ like e.g. ~company-capf~ like so:
 (add-hook 'eshell-mode-hook #'setup-eshell-grouped-backends)
 #+end_src
 
-This isn't recommended since the history suggestions will be neither fish-lke,
+This isn't recommended since the history suggestions will be neither fish-like,
 nor will they work after typing the first word on the command line, since
 company-backends need to share a prefix to work together smoothly. See
 [[https://github.com/company-mode/company-mode/issues/744][company-mode/company-mode#744]] for more information.
