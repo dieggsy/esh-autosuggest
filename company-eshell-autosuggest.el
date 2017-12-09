@@ -5,7 +5,7 @@
 ;; URL: http://github.com/dieggsy/company-eshell-autosuggest
 ;; Git-Repository: git://github.com/dieggsy/company-eshell-autosuggest.git
 ;; Created: 2017-10-28
-;; Version: 1.2.0
+;; Version: 1.2.1
 ;; Keywords: completion company matching convenience abbrev
 ;; Package-Requires: ((emacs "24.4") (company "0.9.4"))
 
@@ -105,7 +105,13 @@ respectively."
   "Enable fish-like autosuggestions in eshell.
 
 You can use <right> to select the suggestion. This is
-customizable with `company-eshell-autosuggest-selection-keys'.
+customizable through `company-eshell-autosuggest-active-map'. If
+you prefer to use the default value of `company-active-map', you
+may set the variable
+`company-eshell-autosuggest-use-company-map', though this isn't
+recommended as RET and TAB may not work as you expect (send
+input, trigger completions, respectively) when there is an active
+suggestion.
 
 The delay defaults to 0 seconds to emulate fish shell's
 instantaneous suggestions, but is customizable with
