@@ -109,8 +109,8 @@ customizable through `company-eshell-autosuggest-active-map'. If
 you prefer to use the default value of `company-active-map', you
 may set the variable
 `company-eshell-autosuggest-use-company-map', though this isn't
-recommended as RET and TAB may not work as you expect (send
-input, trigger completions, respectively) when there is an active
+recommended as RET and TAB may not work as expected (send input,
+trigger completions, respectively) when there is an active
 suggestion.
 
 The delay defaults to 0 seconds to emulate fish shell's
