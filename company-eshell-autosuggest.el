@@ -57,8 +57,8 @@ respectively."
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "<right>") 'company-complete-selection)
     (define-key keymap (kbd "C-f") 'company-complete-selection)
-    (define-key keymap (kbd "M-<right>") 'company-eshell-autosugggest-complete-word)
-    (define-key keymap (kbd "M-f") 'company-eshell-autosugggest-complete-word)
+    (define-key keymap (kbd "M-<right>") 'company-eshell-autosuggest-complete-word)
+    (define-key keymap (kbd "M-f") 'company-eshell-autosuggest-complete-word)
     keymap)
   "Keymap that is enabled during an active history
   autosuggestion.")
