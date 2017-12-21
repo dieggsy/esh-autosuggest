@@ -5,7 +5,7 @@
 ;; URL: http://github.com/dieggsy/company-eshell-autosuggest
 ;; Git-Repository: git://github.com/dieggsy/company-eshell-autosuggest.git
 ;; Created: 2017-10-28
-;; Version: 1.2.1
+;; Version: 1.2.2
 ;; Keywords: completion company matching convenience abbrev
 ;; Package-Requires: ((emacs "24.4") (company "0.9.4"))
 
@@ -56,6 +56,9 @@ respectively."
 (defvar company-eshell-autosuggest-active-map
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "<right>") 'company-complete-selection)
+    (define-key keymap (kbd "C-f") 'company-complete-selection)
+    (define-key keymap (kbd "M-<right>") 'company-eshell-autosugggest-complete-word)
+    (define-key keymap (kbd "M-f") 'company-eshell-autosugggest-complete-word)
     keymap)
   "Keymap that is enabled during an active history
   autosuggestion.")
@@ -73,6 +76,18 @@ respectively."
                         history)))
     (when most-similar
       `(,most-similar))))
+
+(defun company-eshell-autosuggest-complete-word ()
+  (interactive)
+  (save-excursion
+    (let ((pos (point)))
+      (company-complete-selection)
+      (goto-char pos)
+      (forward-word)
+      (unless (or (eobp) (eolp))
+        (kill-line))))
+  (end-of-line)
+  (company-begin-backend 'company-eshell-autosuggest))
 
 (defun company-eshell-autosuggest--prefix ()
   "Get current eshell input."
