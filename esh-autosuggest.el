@@ -1,9 +1,9 @@
-;;; company-eshell-autosuggest.el --- History autosuggestions for eshell -*- lexical-binding: t; -*-
+;;; esh-autosuggest.el --- History autosuggestions for eshell -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2017 Diego A. Mundo
 ;; Author: Diego A. Mundo <diegoamundo@gmail.com>
-;; URL: http://github.com/dieggsy/company-eshell-autosuggest
-;; Git-Repository: git://github.com/dieggsy/company-eshell-autosuggest.git
+;; URL: http://github.com/dieggsy/esh-autosuggest
+;; Git-Repository: git://github.com/dieggsy/esh-autosuggest.git
 ;; Created: 2017-10-28
 ;; Version: 1.2.2
 ;; Keywords: completion company matching convenience abbrev
@@ -35,35 +35,35 @@
 (require 'company)
 (require 'cl-lib)
 
-(defgroup company-eshell-autosuggest nil
+(defgroup esh-autosuggest nil
   "Fish-like autosuggestions for eshell."
   :group 'company)
 
-(defcustom company-eshell-autosuggest-delay 0
+(defcustom esh-autosuggest-delay 0
   "Delay for history autosuggestion."
-  :group 'company-eshell-autosuggest
+  :group 'esh-autosuggest
   :type 'number)
 
-(defcustom company-eshell-autosuggest-use-company-map nil
+(defcustom esh-autosuggest-use-company-map nil
   "Instead of overriding `company-active-map', use as-is.
 
 This is disabled by default, as bindings in `company-active-map'
 to RET and TAB may interfere with command input and completion
 respectively."
-  :group 'company-eshell-autosuggest
+  :group 'esh-autosuggest
   :type 'boolean)
 
-(defvar company-eshell-autosuggest-active-map
+(defvar esh-autosuggest-active-map
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "<right>") 'company-complete-selection)
     (define-key keymap (kbd "C-f") 'company-complete-selection)
-    (define-key keymap (kbd "M-<right>") 'company-eshell-autosuggest-complete-word)
-    (define-key keymap (kbd "M-f") 'company-eshell-autosuggest-complete-word)
+    (define-key keymap (kbd "M-<right>") 'esh-autosuggest-complete-word)
+    (define-key keymap (kbd "M-f") 'esh-autosuggest-complete-word)
     keymap)
   "Keymap that is enabled during an active history
   autosuggestion.")
 
-(defun company-eshell-autosuggest-candidates (prefix)
+(defun esh-autosuggest-candidates (prefix)
   "Select the first eshell history candidate with prefix PREFIX."
   (let* ((history
           (delete-dups
@@ -77,7 +77,7 @@ respectively."
     (when most-similar
       `(,most-similar))))
 
-(defun company-eshell-autosuggest-complete-word ()
+(defun esh-autosuggest-complete-word ()
   (interactive)
   (save-excursion
     (let ((pos (point)))
@@ -87,9 +87,9 @@ respectively."
       (unless (or (eobp) (eolp))
         (kill-line))))
   (end-of-line)
-  (company-begin-backend 'company-eshell-autosuggest))
+  (company-begin-backend 'esh-autosuggest))
 
-(defun company-eshell-autosuggest--prefix ()
+(defun esh-autosuggest--prefix ()
   "Get current eshell input."
   (let* ((input-start (progn
                         (save-excursion
@@ -107,30 +107,30 @@ respectively."
       'stop)))
 
 ;;;###autoload
-(defun company-eshell-autosuggest (command &optional arg &rest ignored)
+(defun esh-autosuggest (command &optional arg &rest ignored)
   "`company-mode' backend to provide eshell history suggestion."
   (interactive (list 'interactive))
   (cl-case command
-    (interactive (company-begin-backend 'company-eshell-autosuggest))
+    (interactive (company-begin-backend 'esh-autosuggest))
     (prefix (and (eq major-mode 'eshell-mode)
-                 (company-eshell-autosuggest--prefix)))
-    (candidates (company-eshell-autosuggest-candidates arg))))
+                 (esh-autosuggest--prefix)))
+    (candidates (esh-autosuggest-candidates arg))))
 
-(define-minor-mode company-eshell-autosuggest-mode
+(define-minor-mode esh-autosuggest-mode
   "Enable fish-like autosuggestions in eshell.
 
 You can use <right> to select the suggestion. This is
-customizable through `company-eshell-autosuggest-active-map'. If
+customizable through `esh-autosuggest-active-map'. If
 you prefer to use the default value of `company-active-map', you
 may set the variable
-`company-eshell-autosuggest-use-company-map', though this isn't
+`esh-autosuggest-use-company-map', though this isn't
 recommended as RET and TAB may not work as expected (send input,
 trigger completions, respectively) when there is an active
 suggestion.
 
 The delay defaults to 0 seconds to emulate fish shell's
 instantaneous suggestions, but is customizable with
-`company-eshell-autosuggest-delay'.
+`esh-autosuggest-delay'.
 
 Note: This assumes you want to use something other than company
 for shell completion, e.g. `eshell-pcomplete',
@@ -139,14 +139,14 @@ for shell completion, e.g. `eshell-pcomplete',
 will be locally overriden and company will be used solely for
 history autosuggestions."
   :init-value nil
-  :group 'company-eshell-autosuggest
-  (if company-eshell-autosuggest-mode
+  :group 'esh-autosuggest
+  (if esh-autosuggest-mode
       (progn
         (company-mode 1)
-        (unless company-eshell-autosuggest-use-company-map
-          (setq-local company-active-map company-eshell-autosuggest-active-map))
-        (setq-local company-idle-delay company-eshell-autosuggest-delay)
-        (setq-local company-backends '(company-eshell-autosuggest))
+        (unless esh-autosuggest-use-company-map
+          (setq-local company-active-map esh-autosuggest-active-map))
+        (setq-local company-idle-delay esh-autosuggest-delay)
+        (setq-local company-backends '(esh-autosuggest))
         (setq-local company-frontends '(company-preview-frontend)))
     (company-mode -1)
     (kill-local-variable 'company-active-map)
@@ -154,6 +154,6 @@ history autosuggestions."
     (kill-local-variable 'company-backends)
     (kill-local-variable 'company-frontends)))
 
-(provide 'company-eshell-autosuggest)
+(provide 'esh-autosuggest)
 
-;;; company-eshell-autosuggest.el ends here
+;;; esh-autosuggest.el ends here

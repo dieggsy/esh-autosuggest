@@ -1,6 +1,6 @@
-* company-eshell-autosuggest
-[[http://melpa.milkbox.net/#/company-eshell-autosuggest][file:http://melpa.milkbox.net/packages/company-eshell-autosuggest-badge.svg]]
-[[https://stable.melpa.org/#/company-eshell-autosuggest][file:https://stable.melpa.org/packages/company-eshell-autosuggest-badge.svg]]
+* esh-autosuggest
+[[http://melpa.milkbox.net/#/esh-autosuggest][file:http://melpa.milkbox.net/packages/company-eshell-autosuggest-badge.svg]]
+[[https://stable.melpa.org/#/esh-autosuggest][file:https://stable.melpa.org/packages/company-eshell-autosuggest-badge.svg]]
 [[https://www.gnu.org/licenses/gpl-3.0.txt][file:https://img.shields.io/badge/license-GPL_3-green.svg]]
 
 Fish-like history autosuggestions in eshell
@@ -9,19 +9,19 @@ See [[http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/][
 
 ** Installation
 This package is on melpa. If you have melpa in your package repositories, you
-can use ~M-x RET package-install RET company-eshell-autosuggest~ or install
+can use ~M-x RET package-install RET esh-autosuggest~ or install
 with [[https://github.com/jwiegley/use-package][use-package]]:
 #+begin_src emacs-lisp
-(use-package company-eshell-autosuggest
+(use-package esh-autosuggest
   :ensure t)
 #+end_src
 
 Alternatively, consider installing with [[https://github.com/raxod502/straight.el][straight.el]] or [[https://github.com/quelpa/quelpa-use-package][quelpa-use-package]].
 
 Otherwise, download the files to somewhere on your load path, and require
-company-eshell-autosuggest:
+esh-autosuggest:
 #+begin_src emacs-lisp
-(require 'company-eshell-autosuggest)
+(require 'esh-autosuggest)
 #+end_src
 
 ** Usage
@@ -31,22 +31,22 @@ This package assumes you use something other than company for eshell completion
 
 You can enable the autosuggestions with:
 #+begin_src emacs-lisp
-(add-hook 'eshell-mode-hook #'company-eshell-autosuggest-mode)
+(add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
 #+end_src
 
 *** Keys
 ~<right>~ is used to select the suggestion by default. You can change this
-by binding keys in ~company-eshell-autosuggest-active-map~.
+by binding keys in ~esh-autosuggest-active-map~.
 
 If instead you don't want ~company-active-map~ to be overridden, you may set
-~company-eshell-autosuggest-use-company-map~ to ~t~. This may cause unexpected
+~esh-autosuggest-use-company-map~ to ~t~. This may cause unexpected
 behavior when pressing ~RET~ or ~TAB~, depending on what you want those to do.
 To emulate fish-shell most closely, it is recommended you leave this ~nil~, as
 that will explicitly run your input (regardless of suggestion) on ~RET~, and
 bring up your preferred completion system on ~TAB~.
 
 *** Delay
-~company-eshell-autosuggest-delay~ defaults to 0 seconds. This is most like
+~esh-autosuggest-delay~ defaults to 0 seconds. This is most like
 fish shell's instant history autosuggestions, but can be customized.
 
 *** With other backends (not recommended)
@@ -54,10 +54,10 @@ It is technically possible to group this backend with other company backends
 like e.g. ~company-capf~ like so:
 
 #+begin_src emacs-lisp
-;; don't add company-eshell-autosuggest-mode to eshell-mode-hook
+;; don't add esh-autosuggest-mode to eshell-mode-hook
 (defun setup-eshell-grouped-backends ()
   (setq-local company-backends
-              '((company-capf company-eshell-autosuggest))))
+              '((company-capf esh-autosuggest))))
 
 (add-hook 'eshell-mode-hook #'setup-eshell-grouped-backends)
 #+end_src
