@@ -34,9 +34,11 @@ You can enable the autosuggestions with:
 (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
 #+end_src
 
-*** Keys
-~<right>~ is used to select the suggestion by default. You can change this
-by binding keys in ~esh-autosuggest-active-map~.
+*** Key Bindings
+- ~<right>~ and ~C-f~ are used to select the suggestion.
+- ~M-<right>~ and ~M-f~ are used to select the nnext word in the suggsetion.
+
+Keys can be modified using ~esh-autossugest-active-map~.
 
 If instead you don't want ~company-active-map~ to be overridden, you may set
 ~esh-autosuggest-use-company-map~ to ~t~. This may cause unexpected
