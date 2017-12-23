@@ -1,7 +1,6 @@
 * esh-autosuggest
-[[http://melpa.milkbox.net/#/esh-autosuggest][file:http://melpa.milkbox.net/packages/company-eshell-autosuggest-badge.svg]]
-[[https://stable.melpa.org/#/esh-autosuggest][file:https://stable.melpa.org/packages/company-eshell-autosuggest-badge.svg]]
-[[https://www.gnu.org/licenses/gpl-3.0.txt][file:https://img.shields.io/badge/license-GPL_3-green.svg]]
+[[http://melpa.milkbox.net/#/esh-autosuggest][file:http://melpa.milkbox.net/packages/esh-autosuggest-badge.svg]]
+[[https://stable.melpa.org/#/esh-autosuggest][file:https://stable.melpa.org/packages/esh-autosuggest-badge.svg]]
 
 Fish-like history autosuggestions in eshell
 
