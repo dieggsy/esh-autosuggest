@@ -13,6 +13,10 @@ can use ~M-x RET package-install RET esh-autosuggest~ or install
 with [[https://github.com/jwiegley/use-package][use-package]]:
 #+begin_src emacs-lisp
 (use-package esh-autosuggest
+  :hook (eshell-mode . esh-autosuggest-mode)
+  ;; If you have use-package-hook-name-suffix set to nil, uncomment and use the
+  ;; line below instead:
+  ;; :hook (eshell-mode-hook . esh-autosuggest-mode)
   :ensure t)
 #+end_src
 
@@ -29,7 +33,8 @@ This package assumes you use something other than company for eshell completion
 (e.g. ~eshell-pcomplete~, ~completion-at-point~, ~helm-esh-pcomplete~).
 ~company-mode~ is used solely as a mechanism for history autosuggestions.
 
-You can enable the autosuggestions with:
+Unless you're using use-package's hook keyword as described in Installation,
+you can enable the autosuggestions with:
 #+begin_src emacs-lisp
 (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
 #+end_src
