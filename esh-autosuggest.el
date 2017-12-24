@@ -64,7 +64,7 @@ respectively."
   autosuggestion.")
 
 (defun esh-autosuggest-candidates (prefix)
-  "Select the first eshell history candidate with prefix PREFIX."
+  "Select the first eshell history candidate that starts with PREFIX."
   (let* ((history
           (delete-dups
            (mapcar (lambda (str)
