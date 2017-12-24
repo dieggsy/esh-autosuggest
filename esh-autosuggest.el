@@ -87,7 +87,9 @@ respectively."
       (unless (or (eobp) (eolp))
         (kill-line))))
   (end-of-line)
-  (company-begin-backend 'esh-autosuggest))
+  (ignore-errors
+    (let ((inhibit-message t))
+      (company-begin-backend 'esh-autosuggest))))
 
 (defun esh-autosuggest--prefix ()
   "Get current eshell input."
