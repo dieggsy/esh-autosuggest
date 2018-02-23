@@ -4,7 +4,7 @@
 
 Fish-like history autosuggestions in eshell
 
-See [[http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/][my blog post]] for an example.
+[[demo.gif]]
 
 ** Installation
 This package is on melpa. If you have melpa in your package repositories, you
