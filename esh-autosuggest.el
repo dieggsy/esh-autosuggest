@@ -5,7 +5,7 @@
 ;; URL: http://github.com/dieggsy/esh-autosuggest
 ;; Git-Repository: git://github.com/dieggsy/esh-autosuggest.git
 ;; Created: 2017-10-28
-;; Version: 1.2.2
+;; Version: 2.0.1
 ;; Keywords: completion company matching convenience abbrev
 ;; Package-Requires: ((emacs "24.4") (company "0.9.4"))
 
@@ -96,8 +96,7 @@ respectively."
   (let* ((input-start (progn
                         (save-excursion
                           (beginning-of-line)
-                          (while (not (looking-at-p eshell-prompt-regexp))
-                            (forward-line -1))
+                          (re-search-forward eshell-prompt-regexp nil 'noerror)
                           (eshell-bol))))
          (prefix
           (string-trim-left
