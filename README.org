@@ -96,7 +96,7 @@ shell completion. Try one or more of the following for tab completion:
   (setq ivy-do-completion-in-region t) ; this is the default
 
   (defun setup-eshell-ivy-completion ()
-    (define-key [remap eshell-pcomplete] 'completion-at-point)
+    (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
     ;; only if you want to use the minibuffer for completions instead of the
     ;; in-buffer interface
     (setq-local ivy-display-functions-alist
