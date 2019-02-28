@@ -96,6 +96,8 @@ respectively."
   (let* ((input-start (progn
                         (save-excursion
                           (beginning-of-line)
+                          (while (not (looking-at-p eshell-prompt-regexp))
+                            (forward-line -1))
                           (re-search-forward eshell-prompt-regexp nil 'noerror)
                           (eshell-bol))))
          (prefix
