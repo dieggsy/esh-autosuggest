@@ -40,9 +40,9 @@ you can enable the autosuggestions with:
 
 *** Key Bindings
 - ~<right>~ and ~C-f~ are used to select the suggestion.
-- ~M-<right>~ and ~M-f~ are used to select the nnext word in the suggsetion.
+- ~M-<right>~ and ~M-f~ are used to select the next word in the suggestion.
 
-Keys can be modified using ~esh-autossugest-active-map~.
+Keys can be modified using ~esh-autosuggest-active-map~.
 
 If instead you don't want ~company-active-map~ to be overridden, you may set
 ~esh-autosuggest-use-company-map~ to ~t~. This may cause unexpected
