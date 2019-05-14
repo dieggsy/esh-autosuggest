@@ -53,6 +53,19 @@ respectively."
   :group 'esh-autosuggest
   :type 'boolean)
 
+(defcustom esh-autosuggest-use-company-face t
+  "Instead of remapping company preview faces, use as-is."
+  :group 'esh-autosuggest
+  :type 'boolean)
+
+(defface esh-autosuggest-preview
+  '((((background dark))
+     :foreground "DimGrey" :inherit default)
+    (((background light))
+     :foregorund "LightGrey" :inherit default))
+  "Face for autosuggestion preview."
+  :group 'esh-autosuggest)
+
 (defvar esh-autosuggest-active-map
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "<right>") 'company-complete-selection)
@@ -62,6 +75,13 @@ respectively."
     keymap)
   "Keymap that is enabled during an active history
   autosuggestion.")
+
+(defvar esh-autosuggest--face-remapping-alist
+  '((company-preview . esh-autosuggest-preview)
+    (company-preview-common . esh-autosuggest-preview)
+    (company-preview-search . esh-autosuggest-preview))
+  "Alist of face remappings used by `esh-autosuggest-mode'.
+See `face-remapping-alist' for details.")
 
 (defun esh-autosuggest-candidates (prefix)
   "Select the first eshell history candidate that starts with PREFIX."
@@ -131,6 +151,10 @@ recommended as RET and TAB may not work as expected (send input,
 trigger completions, respectively) when there is an active
 suggestion.
 
+To mimic the looking of fish shell autosuggestion, you may set
+the variable `esh-autosuggest-use-company-face' to nil to use a
+dedicated face for history suggestions.
+
 The delay defaults to 0 seconds to emulate fish shell's
 instantaneous suggestions, but is customizable with
 `esh-autosuggest-delay'.
@@ -150,12 +174,17 @@ history autosuggestions."
           (setq-local company-active-map esh-autosuggest-active-map))
         (setq-local company-idle-delay esh-autosuggest-delay)
         (setq-local company-backends '(esh-autosuggest))
-        (setq-local company-frontends '(company-preview-frontend)))
+        (setq-local company-frontends '(company-preview-frontend))
+        (unless esh-autosuggest-use-company-face
+          (setq-local face-remapping-alist
+                      (append esh-autosuggest--face-remapping-alist
+                              face-remapping-alist))))
     (company-mode -1)
     (kill-local-variable 'company-active-map)
     (kill-local-variable 'company-idle-delay)
     (kill-local-variable 'company-backends)
-    (kill-local-variable 'company-frontends)))
+    (kill-local-variable 'company-frontends)
+    (kill-local-variable 'face-remapping-alist)))
 
 (provide 'esh-autosuggest)
 
