@@ -34,6 +34,8 @@
 
 (require 'company)
 (require 'cl-lib)
+(eval-when-compile
+  (require 'subr-x))
 
 (defgroup esh-autosuggest nil
   "Fish-like autosuggestions for eshell."
