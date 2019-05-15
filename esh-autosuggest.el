@@ -65,8 +65,7 @@ respectively."
     (define-key keymap (kbd "M-<right>") 'esh-autosuggest-complete-word)
     (define-key keymap (kbd "M-f") 'esh-autosuggest-complete-word)
     keymap)
-  "Keymap that is enabled during an active history
-  autosuggestion.")
+  "Keymap that is enabled during an active history autosuggestion.")
 
 (defun esh-autosuggest-candidates (prefix)
   "Select the first eshell history candidate that starts with PREFIX."
@@ -83,6 +82,7 @@ respectively."
       `(,most-similar))))
 
 (defun esh-autosuggest-complete-word ()
+  "Insert the next word of the history suggestion."
   (interactive)
   (save-excursion
     (let ((pos (point)))
