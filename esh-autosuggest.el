@@ -44,6 +44,11 @@
   :group 'esh-autosuggest
   :type 'number)
 
+(defcustom esh-autosuggest-prefix-length 1
+  "Minimum prefix length for history autosuggestion."
+  :group 'esh-autosuggest
+  :type 'number)
+
 (defcustom esh-autosuggest-use-company-map nil
   "Instead of overriding `company-active-map', use as-is.
 
@@ -135,6 +140,10 @@ The delay defaults to 0 seconds to emulate fish shell's
 instantaneous suggestions, but is customizable with
 `esh-autosuggest-delay'.
 
+The minimum completion prefix length default to 1 also to emulate
+fish shell, and it customizable with
+`esh-autosuggest-prefix-length'.
+
 Note: This assumes you want to use something other than company
 for shell completion, e.g. `eshell-pcomplete',
 `completion-at-point', or helm-esh-pcomplete, since
@@ -149,11 +158,13 @@ history autosuggestions."
         (unless esh-autosuggest-use-company-map
           (setq-local company-active-map esh-autosuggest-active-map))
         (setq-local company-idle-delay esh-autosuggest-delay)
+        (setq-local company-minimum-prefix-length esh-autosuggest-prefix-length)
         (setq-local company-backends '(esh-autosuggest))
         (setq-local company-frontends '(company-preview-frontend)))
     (company-mode -1)
     (kill-local-variable 'company-active-map)
     (kill-local-variable 'company-idle-delay)
+    (kill-local-variable 'company-minimum-prefix-length)
     (kill-local-variable 'company-backends)
     (kill-local-variable 'company-frontends)))
 
