@@ -34,6 +34,7 @@
 
 (require 'company)
 (require 'cl-lib)
+(require 'face-remap)
 
 (defgroup esh-autosuggest nil
   "Fish-like autosuggestions for eshell."
@@ -53,6 +54,11 @@ respectively."
   :group 'esh-autosuggest
   :type 'boolean)
 
+(defface esh-autosuggest-preview
+  '((t (:inherit company-preview)))
+  "Face used for autosuggestion preview."
+  :group 'esh-autosuggest)
+
 (defvar esh-autosuggest-active-map
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "<right>") 'company-complete-selection)
@@ -62,6 +68,15 @@ respectively."
     keymap)
   "Keymap that is enabled during an active history
   autosuggestion.")
+
+(defvar esh-autosuggest--original-preview-faces
+  '(company-preview
+    company-preview-common
+    company-preview-search)
+  "Original faces for autosuggestion.")
+
+(defvar-local esh-autosuggest--face-remapping-cookies nil
+  "Face remapping cookies added by `esh-autosuggest-mode'.")
 
 (defun esh-autosuggest-candidates (prefix)
   "Select the first eshell history candidate that starts with PREFIX."
@@ -150,12 +165,18 @@ history autosuggestions."
           (setq-local company-active-map esh-autosuggest-active-map))
         (setq-local company-idle-delay esh-autosuggest-delay)
         (setq-local company-backends '(esh-autosuggest))
-        (setq-local company-frontends '(company-preview-frontend)))
+        (setq-local company-frontends '(company-preview-frontend))
+        (dolist (face esh-autosuggest--original-preview-faces)
+          (push (face-remap-add-relative face 'esh-autosuggest-preview)
+                esh-autosuggest--face-remapping-cookies)))
     (company-mode -1)
     (kill-local-variable 'company-active-map)
     (kill-local-variable 'company-idle-delay)
     (kill-local-variable 'company-backends)
-    (kill-local-variable 'company-frontends)))
+    (kill-local-variable 'company-frontends)
+    (dolist (cookie esh-autosuggest--face-remapping-cookies)
+      (face-remap-remove-relative cookie))
+    (setq esh-autosuggest--face-remapping-cookies nil)))
 
 (provide 'esh-autosuggest)
 
