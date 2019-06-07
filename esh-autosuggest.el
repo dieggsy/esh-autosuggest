@@ -34,7 +34,10 @@
 
 (require 'company)
 (require 'cl-lib)
+(require 'ring)
 (require 'face-remap)
+(eval-when-compile
+  (require 'subr-x))
 
 (defgroup esh-autosuggest nil
   "Fish-like autosuggestions for eshell."
@@ -66,8 +69,7 @@ respectively."
     (define-key keymap (kbd "M-<right>") 'esh-autosuggest-complete-word)
     (define-key keymap (kbd "M-f") 'esh-autosuggest-complete-word)
     keymap)
-  "Keymap that is enabled during an active history
-  autosuggestion.")
+  "Keymap that is enabled during an active history autosuggestion.")
 
 (defvar esh-autosuggest--original-preview-faces
   '(company-preview
@@ -77,6 +79,10 @@ respectively."
 
 (defvar-local esh-autosuggest--face-remapping-cookies nil
   "Face remapping cookies added by `esh-autosuggest-mode'.")
+
+(defvar eshell-history-ring)
+(defvar eshell-prompt-regexp)
+(declare-function eshell-bol "esh-mode")
 
 (defun esh-autosuggest-candidates (prefix)
   "Select the first eshell history candidate that starts with PREFIX."
@@ -93,6 +99,7 @@ respectively."
       `(,most-similar))))
 
 (defun esh-autosuggest-complete-word ()
+  "Insert the next word in the suggestion."
   (interactive)
   (save-excursion
     (let ((pos (point)))
