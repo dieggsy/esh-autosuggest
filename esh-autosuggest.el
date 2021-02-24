@@ -1,7 +1,7 @@
 ;;; esh-autosuggest.el --- History autosuggestions for eshell -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2017 Diego A. Mundo
-;; Author: Diego A. Mundo <diegoamundo@gmail.com>
+;; Author: Diego A. Mundo <dieggsy@pm.me>
 ;; URL: http://github.com/dieggsy/esh-autosuggest
 ;; Git-Repository: git://github.com/dieggsy/esh-autosuggest.git
 ;; Created: 2017-10-28
