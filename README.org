@@ -73,6 +73,11 @@ nor will they work after typing the first word on the command line, since
 company-backends need to share a prefix to work together smoothly. See
 [[https://github.com/company-mode/company-mode/issues/744][company-mode/company-mode#744]] for more information.
 
+*** Known bugs and workarounds
+If you're using [[https://github.com/emacs-evil/evil-collection][evil-collection]], there's a [[https://github.com/dieggsy/esh-autosuggest/issues/12][known issue]] that occurs when
+~evil-collection-company-use-tng~ is set to ~t~ (the default). If you don't
+need that feature, you can set it to ~nil~ for the time being.
+
 ** Rationale and tips
 I made this package to help ease a transition from zsh to eshell as my main
 shell. The reason the main mechanism is a minor-mode that overrides
