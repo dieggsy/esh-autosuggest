@@ -117,7 +117,8 @@ respectively."
     (interactive (company-begin-backend 'esh-autosuggest))
     (prefix (and (eq major-mode 'eshell-mode)
                  (esh-autosuggest--prefix)))
-    (candidates (esh-autosuggest-candidates arg))))
+    (candidates (esh-autosuggest-candidates arg))
+    (require-match 'never)))
 
 (define-minor-mode esh-autosuggest-mode
   "Enable fish-like autosuggestions in eshell.
