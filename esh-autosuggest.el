@@ -117,7 +117,8 @@ respectively."
     (interactive (company-begin-backend 'esh-autosuggest))
     (prefix (and (eq major-mode 'eshell-mode)
                  (esh-autosuggest--prefix)))
-    (candidates (esh-autosuggest-candidates arg))))
+    (candidates (esh-autosuggest-candidates arg))
+    (require-match 'never)))
 
 ;;;###autoload
 (define-minor-mode esh-autosuggest-mode
