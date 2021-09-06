@@ -119,6 +119,7 @@ respectively."
                  (esh-autosuggest--prefix)))
     (candidates (esh-autosuggest-candidates arg))))
 
+;;;###autoload
 (define-minor-mode esh-autosuggest-mode
   "Enable fish-like autosuggestions in eshell.
 
