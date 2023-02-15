@@ -34,6 +34,8 @@
 
 (require 'company)
 (require 'cl-lib)
+(eval-when-compile (require 'eshell))
+(require 'em-prompt)
 
 (defgroup esh-autosuggest nil
   "Fish-like autosuggestions for eshell."
@@ -107,7 +109,7 @@ respectively."
       'stop)))
 
 ;;;###autoload
-(defun esh-autosuggest (command &optional arg &rest ignored)
+(defun esh-autosuggest (command &optional arg &rest _ignored)
   "`company-mode' backend to provide eshell history suggestion."
   (interactive (list 'interactive))
   (cl-case command
