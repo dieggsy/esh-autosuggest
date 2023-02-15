@@ -93,13 +93,10 @@ respectively."
 
 (defun esh-autosuggest--prefix ()
   "Get current eshell input."
-  (let* ((input-start (progn
-                        (save-excursion
-                          (beginning-of-line)
-                          (while (not (looking-at-p eshell-prompt-regexp))
-                            (forward-line -1))
-                          (re-search-forward eshell-prompt-regexp nil 'noerror)
-                          (eshell-bol))))
+  (let* ((input-start (save-excursion
+                        (eshell-previous-prompt 1)
+                        (eshell-next-prompt 1)
+                        (point)))
          (prefix
           (string-trim-left
            (buffer-substring-no-properties
