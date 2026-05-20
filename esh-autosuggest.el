@@ -149,6 +149,7 @@ history autosuggestions."
         (company-mode 1)
         (unless esh-autosuggest-use-company-map
           (setq-local company-active-map esh-autosuggest-active-map))
+        (setq-local company-minimum-prefix-length 1)
         (setq-local company-idle-delay esh-autosuggest-delay)
         (setq-local company-backends '(esh-autosuggest))
         (setq-local company-frontends '(company-preview-frontend)))
