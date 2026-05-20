@@ -55,6 +55,11 @@ respectively."
   :group 'esh-autosuggest
   :type 'boolean)
 
+(defcustom esh-autosuggest-executables t
+  "Whether to suggest executables in path in addition to history"
+  :group 'esh-autosuggest
+  :type 'boolean)
+
 (defvar esh-autosuggest-active-map
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "<right>") 'company-complete-selection)
@@ -72,10 +77,20 @@ respectively."
            (mapcar (lambda (str)
                      (string-trim (substring-no-properties str)))
                    (ring-elements eshell-history-ring))))
-         (most-similar (cl-find-if
-                        (lambda (str)
-                          (string-prefix-p prefix str))
-                        history)))
+         (most-similar (or (cl-find-if
+                            (lambda (str)
+                              (string-prefix-p prefix str))
+                            history)
+                           (when (and esh-autosuggest-executables
+                                      (not (seq-contains-p prefix ? )))
+                             (car
+                              (cl-some
+                               (lambda (path)
+                                 (when (file-directory-p path)
+                                   (directory-files path nil
+                                                    (concat "^" prefix)
+                                                    nil)))
+                               (exec-path)))))))
     (when most-similar
       `(,most-similar))))
 
